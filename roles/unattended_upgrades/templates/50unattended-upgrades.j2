@@ -1,0 +1,40 @@
+{{ ansible_managed | comment('c') }}
+
+Unattended-Upgrade::Allowed-Origins {
+{{ unattended_upgrades_security_origins | join('\n') }}
+{% if unattended_upgrades_generic %}
+{{ unattended_upgrades_generic_origins | join('\n') }}
+{% endif %}
+};
+
+Unattended-Upgrade::Package-Blacklist {
+};
+
+Unattended-Upgrade::DevRelease "false";
+
+{% if unattended_upgrades_autofixinterrupteddpkg %}
+Unattended-Upgrade::AutoFixInterruptedDpkg "{{ unattended_upgrades_autofixinterrupteddpkg  | bool | lower }}";
+{% endif %}
+
+{% if unattended_upgrades_minimalsteps %}
+Unattended-Upgrade::MinimalSteps "{{ unattended_upgrades_minimalsteps  | bool | lower }}";
+{% endif %}
+
+{% if unattended_upgrades_mailfrom is defined and unattended_upgrades_mailfrom|length %}
+Unattended-Upgrade::Sender "{{ unattended_upgrades_mailfrom }}";
+{% endif %}
+
+{% if unattended_upgrades_mailto is defined and unattended_upgrades_mailto|length %}
+Unattended-Upgrade::Mail "{{ unattended_upgrades_mailto }}";
+{% endif %}
+
+Unattended-Upgrade::MailOnlyOnError "{{ unattended_upgrades_mailonlyonerror | bool | lower }}";
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "{{ unattended_upgrades_removeunusedkernel | bool | lower }}";
+Unattended-Upgrade::Remove-Unused-Dependencies "{{ unattended_upgrades_removeunused | bool | lower }}";
+Unattended-Upgrade::Automatic-Reboot "{{ unattended_upgrades_autoreboot | bool | lower }}";
+Unattended-Upgrade::Automatic-Reboot-Time "{{ unattended_upgrades_autoreboottime }}";
+
+//Acquire::http::Dl-Limit "70";
+Unattended-Upgrade::SyslogEnable "false";
+Unattended-Upgrade::SyslogFacility "daemon";
+Unattended-Upgrade::OnlyOnACPower "true";

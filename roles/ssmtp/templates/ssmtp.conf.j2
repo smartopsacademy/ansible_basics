@@ -1,0 +1,29 @@
+{{ ansible_managed | comment }}
+
+{% if ssmtp_root is defined and ssmtp_root|length %}
+Root={{ ssmtp_root }}
+{% endif %}
+
+{% if ssmtp_mailhub is defined and ssmtp_mailhub|length %}
+MailHub={{ ssmtp_mailhub }}
+{% endif %}
+
+{% if ssmtp_rewritedomain is defined and ssmtp_rewritedomain|length %}
+RewriteDomain={{ ssmtp_rewritedomain }}
+{% endif %}
+
+{% if ssmtp_hostname is defined and ssmtp_hostname|length %}
+Hostname={{ ssmtp_hostname }}
+{% endif %}
+
+FromLineOverride={{ 'YES' if ssmtp_fromoverride|bool else 'NO' }}
+UseTLS={{ 'YES' if ssmtp_tls|bool else 'NO' }}
+UseSTARTTLS={{ 'YES' if ssmtp_starttls|bool else 'NO' }}
+
+{% if ssmtp_authuser is defined and ssmtp_authuser|length %}
+AuthUser={{ ssmtp_authuser }}
+{% endif %}
+
+{% if ssmtp_authpass is defined and ssmtp_authpass|length %}
+AuthPass={{ ssmtp_authpass }}
+{% endif %}

@@ -1,0 +1,7 @@
+---
+apt_main_uri: "http://archive.ubuntu.com/ubuntu"
+apt_updates_uri: "{{ apt_main_uri }}"
+apt_security_uri: "{{ apt_main_uri }}"
+apt_stores: "main restricted universe multiverse"
+apt_updates_repo: "-updates"
+apt_security_repo: "-security"

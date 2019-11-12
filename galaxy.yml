@@ -1,0 +1,19 @@
+---
+namespace: smartopsacademy
+name: ansible_basics
+description: "Debian / Ubuntu server management roles for training purposes."
+version: 1.0.0
+readme: README.md
+authors:
+    - "SmartOps Academy (https://smartops.academy)"
+license:
+    - CC-BY-SA-4.0
+tags:
+    - debian
+    - ubuntu
+    - training
+dependencies: {}
+repository: https://github.com/SmartOpsAcademy/ansible-basics
+documentation: https://smartops.academy/ansible
+homepage: https://smartops.academy
+issues: https://github.com/SmartOpsAcademy/ansible-basics/issues

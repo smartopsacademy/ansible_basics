@@ -1,0 +1,4 @@
+---
+- name: Rebuild Debian unattended-upgrades database
+  command: dpkg-reconfigure unattended-upgrades -f noninteractive -p high
+  become: true

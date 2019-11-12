@@ -1,0 +1,14 @@
+---
+ssmtp_packages:
+  - ssmtp
+  - bsd-mailx
+
+ssmtp_mailname: '{{ ansible_fqdn }}'
+ssmtp_mailhub: 'smtp.eu.mailgun.org'
+ssmtp_fromoverride: false
+ssmtp_hostname: '{{ ansible_fqdn }}'
+ssmtp_port: 587
+ssmtp_rewritedomain: '{{ ansible_domain }}'
+ssmtp_root: '{{ system_mailto }}'
+ssmtp_tls: false
+ssmtp_starttls: true

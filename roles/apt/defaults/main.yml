@@ -1,0 +1,20 @@
+---
+apt_install_recommends: 'no'
+apt_update_cache: 'yes'
+apt_force_apt_get: 'yes'
+apt_upgrade: 'no'
+apt_autoclean: 'yes'
+apt_autoremove: 'no'
+
+apt_base_packages:
+  - 'lsb-release'
+  - 'apt-transport-https'
+  - 'ca-certificates'
+
+apt_repositories:
+  - repo: 'deb {{ apt_main_uri }} {{ ansible_facts.distribution_release }} {{ apt_stores }}'
+    state: 'present'
+  - repo: 'deb {{ apt_updates_uri }} {{ ansible_facts.distribution_release }}{{apt_updates_repo}} {{ apt_stores }}'
+    state: 'present'
+  - repo: 'deb {{ apt_security_uri }} {{ ansible_facts.distribution_release }}{{apt_security_repo}} {{ apt_stores }}'
+    state: 'present'

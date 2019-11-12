@@ -1,0 +1,7 @@
+{{ ansible_managed | comment }}
+
+# Configuration for systemd-timesyncd
+
+[Time]
+NTP={{ timedatectl_servers | join(' ') }}
+FallbackNTP={{ timedatectl_servers_fallback | join(' ') }}

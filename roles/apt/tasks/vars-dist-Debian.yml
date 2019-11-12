@@ -1,0 +1,7 @@
+---
+apt_main_uri: "http://ftp.debian.org/debian"
+apt_updates_uri: "{{ apt_main_uri }}"
+apt_security_uri: "http://security.debian.org"
+apt_stores: "main contrib"
+apt_updates_repo: "-updates"
+apt_security_repo: "/updates"

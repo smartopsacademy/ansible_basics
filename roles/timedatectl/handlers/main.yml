@@ -1,0 +1,10 @@
+---
+- name: Rebuild Debian tzdata database
+  command: dpkg-reconfigure tzdata -f noninteractive -p critical
+  become: true
+
+- name: Restart systemd-timesyncd
+  service:
+    name: 'systemd-timesyncd'
+    state: 'restarted'
+  become: true

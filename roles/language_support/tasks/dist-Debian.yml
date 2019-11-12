@@ -1,0 +1,29 @@
+---
+- name: Set debconf locales
+  debconf:
+    name: locales
+    question: locales/locales_to_be_generated
+    value: "{% for locale in languagesupport_locales %}{{ locale }} {{ locale.split('.').1 }},{% endfor %}"
+    vtype: multiselect
+  notify: rebuild Debian locales database
+  become: true
+
+- name: Set debconf environment locale
+  debconf:
+    name: locales
+    question: locales/default_environment_locale
+    value: "{{ languagesupport_default }}"
+    vtype: select
+  notify: rebuild Debian locales database
+  become: true
+
+- name: Configure system locales in locale.gen
+  lineinfile:
+    dest: /etc/locale.gen
+    regexp: "^#? ?{{ item }}"
+    line: "{{ item }} {{ item.split('.')[1] }}"
+    state: "present"
+  loop: "{{ languagesupport_locales | flatten(levels=1) }}"
+  notify:
+    - rebuild locales database
+  become: true

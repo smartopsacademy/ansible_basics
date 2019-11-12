@@ -1,0 +1,20 @@
+---
+- name: Include distribution specific variables
+  include_vars: "vars-dist-{{ ansible_facts.distribution }}.yml"
+
+- name: Configure APT repositories
+  apt_repository:
+    update_cache: '{{ apt_update_cache }}'
+    repo: '{{ item.repo }}'
+    state: '{{ item.state }}'
+  with_items: '{{ apt_repositories }}'
+  become: true
+
+- name: Upgrade packages
+  apt:
+    update_cache: '{{ apt_update_cache }}'
+    upgrade: '{{ apt_upgrade }}'
+    autoclean: '{{ apt_autoclean }}'
+    autoremove: '{{ apt_autoremove }}'
+    force_apt_get: '{{ apt_force_apt_get }}'
+  become: true

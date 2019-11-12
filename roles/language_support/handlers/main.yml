@@ -1,0 +1,8 @@
+---
+- name: rebuild Debian locales database
+  command: dpkg-reconfigure locales -f noninteractive -p critical
+  become: true
+
+- name: rebuild locales database
+  command: /usr/sbin/locale-gen
+  become: true

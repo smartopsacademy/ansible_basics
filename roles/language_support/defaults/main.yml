@@ -1,0 +1,8 @@
+---
+# Ubuntu package installation: base or full version?
+languagesupport_installfull: true
+
+languagesupport_locales:
+  - en_US.UTF-8
+
+languagesupport_default: en_US.UTF-8

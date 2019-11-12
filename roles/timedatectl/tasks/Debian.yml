@@ -1,0 +1,19 @@
+- name: Set debconf tzdata Area
+  debconf:
+    name: tzdata
+    question: tzdata/Areas
+    value: "{{ timedatectl_timezone.split('/')[0] }}"
+    vtype: string
+  notify:
+    - 'Rebuild Debian tzdata database'
+  become: true
+
+- name: Set debconf tzdata Zone
+  debconf:
+    name: tzdata
+    question: tzdata/Zones/{{ timedatectl_timezone.split('/')[0] }}
+    value: "{{ timedatectl_timezone.split('/')[1] }}"
+    vtype: string
+  notify:
+    - 'Rebuild Debian tzdata database'
+  become: true

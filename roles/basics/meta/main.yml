@@ -1,0 +1,28 @@
+galaxy_info:
+  author: SmartOps.Academy
+  description: Configure some basics on your Debian/Ubuntu system.
+  company: SmartOps Academy
+
+  license: CC-BY-SA
+
+  min_ansible_version: 2.4
+
+  github_branch: https://github.com/SmartOpsAcademy/ansible/roles/basics
+
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+        - buster
+    - name: Ubuntu
+      versions:
+        - bionic
+
+  galaxy_tags:
+    - debian
+    - ubuntu
+    - shell
+    - basicconfigurations
+
+dependencies: []

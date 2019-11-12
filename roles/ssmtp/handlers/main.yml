@@ -1,0 +1,4 @@
+---
+- name: Rebuild Debian ssmtp database
+  command: dpkg-reconfigure ssmtp -f noninteractive -p high
+  become: true

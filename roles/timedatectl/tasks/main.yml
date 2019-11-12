@@ -1,0 +1,37 @@
+---
+- name: Set debconf defaults in Debian like OSs
+  include: "{{ ansible_os_family }}.yml"
+
+- name: Make sure timesyncd.conf override dir exists
+  file:
+    path: '/etc/systemd/timesyncd.conf.d'
+    state: 'directory'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  become: true
+
+- name: Configure systemd-timesyncd
+  template:
+    src: 'timesyncd.conf.j2'
+    dest: '/etc/systemd/timesyncd.conf.d/local.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify:
+    - 'Restart systemd-timesyncd'
+  when: ansible_service_mgr == "systemd"
+  become: true
+
+- name: set Timezone
+  timezone: name={{ timedatectl_timezone }}
+  when: ansible_service_mgr == "systemd"
+  become: true
+
+- name: Manage systemd-timesyncd state
+  service:
+    name: 'systemd-timesyncd'
+    state: '{{ "started" if (timesyncd_enabled|bool) else "stopped" }}'
+    enabled: '{{ timesyncd_enabled }}'
+  when: ansible_service_mgr == "systemd"
+  become: true

@@ -1,0 +1,38 @@
+---
+- name: Enable/disable auto updates before installation (debconf)
+  debconf:
+    name: unattended-upgrades
+    question: unattended-upgrades/enable_auto_updates
+    value: '{{ "true" if (unattended_upgrades_enabled | bool) else "false" }}'
+    vtype: boolean
+  notify:
+    - Rebuild Debian unattended-upgrades database
+  become: true
+
+- name: Install unattended upgrades & dependencies
+  apt:
+    name: '{{ unattended_upgrades_packages }}'
+    state: present
+    install_recommends: no
+    autoclean: yes
+    force_apt_get: true
+  become: true
+
+- name: Enable/disable unattended-upgrades
+  template:
+    src: '20auto-upgrades.j2'
+    dest: '/etc/apt/apt.conf.d/20auto-upgrades'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  become: true
+
+- name: Configure unattended-upgrades
+  template:
+    src: '50unattended-upgrades.j2'
+    dest: '/etc/apt/apt.conf.d/50unattended-upgrades'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when: unattended_upgrades_enabled | bool
+  become: true

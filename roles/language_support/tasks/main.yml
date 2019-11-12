@@ -1,0 +1,3 @@
+---
+- name: Distribution specific configurations
+  include_tasks: "dist-{{ ansible_facts.distribution }}.yml"

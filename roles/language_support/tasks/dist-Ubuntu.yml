@@ -1,0 +1,30 @@
+---
+- name: List of base language packs
+  set_fact: languagesupport_basepack='language-pack-{{ item.split('_')[0] }}-base'
+  loop: "{{ languagesupport_locales|flatten(levels=1) }}"
+  register: languagesupport_basepacks
+
+- name: List of full language packs
+  set_fact: languagesupport_fullpack='language-pack-{{ item.split('_')[0] }}'
+  loop: "{{ languagesupport_locales|flatten(levels=1) }}"
+  register: languagesupport_fullpacks
+  when: languagesupport_installfull | bool
+
+- name: Install base language pack(s)
+  apt:
+    name: "{{ languagesupport_basepacks.results | map(attribute='ansible_facts.languagesupport_basepack') | list }}"
+    state: present
+    install_recommends: no
+    autoclean: yes
+    force_apt_get: true
+  become: true
+
+- name: Install full language pack(s)
+  apt:
+    name: "{{ languagesupport_fullpacks.results | map(attribute='ansible_facts.languagesupport_fullpack') | list }}"
+    state: present
+    install_recommends: no
+    autoclean: yes
+    force_apt_get: true
+  when: languagesupport_installfull | bool
+  become: true
