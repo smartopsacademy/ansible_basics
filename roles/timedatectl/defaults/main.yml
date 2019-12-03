@@ -1,5 +1,4 @@
 ---
-
 timesyncd_enabled: "{{ 'False' if (ansible_facts.virtualization_type in [ 'lxc' ])
                               else 'True' }}"
 

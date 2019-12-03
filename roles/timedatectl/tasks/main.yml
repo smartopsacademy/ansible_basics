@@ -1,6 +1,6 @@
 ---
 - name: Set debconf defaults in Debian like OSs
-  include_tasks: "{{ ansible_os_family }}.yml"
+  include_tasks: "{{ ansible_facts.os_family }}.yml"
 
 - name: Make sure timesyncd.conf override dir exists
   file:
