@@ -23,6 +23,6 @@ unattended_upgrades_mailonlyonerror: True
 unattended_upgrades_removeunusedkernel: True
 unattended_upgrades_removeunused: False
 unattended_upgrades_autoreboot: False
-unattended_upgrades_autoreboottime: '{{ "02:30" if (ansible_virtualization_role in [ "host", "NA" ])
+unattended_upgrades_autoreboottime: '{{ "02:30" if (ansible_facts.virtualization_role in [ "host", "NA" ])
                                         else "02:42"
                                     }}'
