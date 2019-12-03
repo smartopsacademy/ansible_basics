@@ -1,7 +1,7 @@
 ---
-apt_main_uri: "http://ftp.debian.org/debian"
-apt_updates_uri: "{{ apt_main_uri }}"
-apt_security_uri: "http://security.debian.org"
-apt_stores: "main contrib"
-apt_updates_repo: "-updates"
-apt_security_repo: "/updates"
+__apt_main_uri: "{{ apt_main_uri | default('http://ftp.debian.org/debian') }}"
+__apt_updates_uri: "{{ __apt_main_uri }}"
+__apt_security_uri: "{{ apt_security_uri | default('http://security.debian.org') }}"
+__apt_stores: "{{ apt_stores | default('main contrib') }}"
+__apt_updates_repo: "{{ apt_updates_repo | default('-updates') }}"
+__apt_security_repo: "{{ apt_security_repo | default('/updates') }}"

@@ -1,7 +1,7 @@
 ---
-apt_main_uri: "http://archive.ubuntu.com/ubuntu"
-apt_updates_uri: "{{ apt_main_uri }}"
-apt_security_uri: "{{ apt_main_uri }}"
-apt_stores: "main restricted universe multiverse"
-apt_updates_repo: "-updates"
-apt_security_repo: "-security"
+__apt_main_uri: "{{ apt_main_uri | default('http://archive.ubuntu.com/ubuntu') }}"
+__apt_updates_uri: "{{ __apt_main_uri }}"
+__apt_security_uri: "{{ __apt_main_uri }}"
+__apt_stores: "{{ apt_stores | default('main restricted universe multiverse') }}"
+__apt_updates_repo: "{{ apt_updates_repo | default('-updates') }}"
+__apt_security_repo: "{{ apt_security_repo | default('-security') }}"

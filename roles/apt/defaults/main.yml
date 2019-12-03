@@ -12,9 +12,9 @@ apt_base_packages:
   - 'ca-certificates'
 
 apt_repositories:
-  - repo: 'deb {{ apt_main_uri }} {{ ansible_facts.distribution_release }} {{ apt_stores }}'
+  - repo: 'deb {{ __apt_main_uri }} {{ ansible_facts.distribution_release }} {{ __apt_stores }}'
     state: 'present'
-  - repo: 'deb {{ apt_updates_uri }} {{ ansible_facts.distribution_release }}{{apt_updates_repo}} {{ apt_stores }}'
+  - repo: 'deb {{ __apt_updates_uri }} {{ ansible_facts.distribution_release }}{{ __apt_updates_repo }} {{ __apt_stores }}'
     state: 'present'
-  - repo: 'deb {{ apt_security_uri }} {{ ansible_facts.distribution_release }}{{apt_security_repo}} {{ apt_stores }}'
+  - repo: 'deb {{ __apt_security_uri }} {{ ansible_facts.distribution_release }}{{ __apt_security_repo }} {{ __apt_stores }}'
     state: 'present'
