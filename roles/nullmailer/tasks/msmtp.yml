@@ -1,0 +1,36 @@
+---
+- name: Disable msmtp debconf config overwrite
+  debconf:
+    name: msmtp
+    question: msmtp/sysconfig
+    value: "false"
+    vtype: boolean
+  notify: 'Rebuild Debian msmtp database'
+  become: true
+
+- name: Install msmtp
+  apt:
+    name: '{{ nullmailer_msmtp_packages }}'
+    state: present
+    install_recommends: no
+    autoclean: yes
+    force_apt_get: true
+  become: true
+
+- name: Configure MSMTP
+  template:
+    src: 'msmtprc.j2'
+    dest: '/etc/msmtprc'
+    owner: 'root'
+    group: 'root'
+    mode: '0640'
+  become: true
+
+- name: Configure aliases
+  template:
+    src: 'aliases.j2'
+    dest: '/etc/aliases'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  become: true
