@@ -9,6 +9,12 @@
 - name: Use the configured network configuration method
   include_tasks: "{{ network_configuration_mode }}.yml"
 
+- name: Make sure systemd-resolved is started
+  systemd:
+    state: started
+    name: "systemd-resolved"
+  become: true
+
 - name: Update systemd-resolved config
   template:
     src: resolved.conf.j2
