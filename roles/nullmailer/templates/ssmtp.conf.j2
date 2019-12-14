@@ -12,7 +12,7 @@ MailHub={{ nullmailer_host }}:{{ nullmailer_port }}
 RewriteDomain={{ nullmailer_mailname }}
 {% endif %}
 
-{% if nullmailer_hostname is defined and nullmailer_hostname|length %}
+{% if nullmailer_fqdn is defined and nullmailer_fqdn|length %}
 Hostname={{ nullmailer_fqdn }}
 {% endif %}
 
