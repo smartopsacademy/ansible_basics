@@ -1,10 +1,8 @@
 ---
 - name: Make sure no other MTA installed
-  apt:
+  package:
     name: '{{ nullmailer_remove_packages }}'
     state: absent
-    autoclean: yes
-    force_apt_get: true
   become: true
 
 - name: Load nullmailer specific tasks

@@ -15,14 +15,27 @@
     line: "force_color_prompt=yes"
     state: present
     insertafter: EOF
-  when: basics_colorprompt | bool
+  when:
+    - basics_colorprompt | bool
+    - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  become: true
+
+- name: "Update profile: colour prompt (RedHat)"
+  copy:
+    src: templates/color_prompt.sh
+    dest: /etc/profile.d/color_prompt.sh
+    owner: root
+    group: root
+    mode: '0644'
+  when:
+    - basics_colorprompt | bool
+    - ansible_os_family == "RedHat"
   become: true
 
 - name: Remove cloud-init
-  apt:
+  package:
     name: cloud-init
     state: absent
-    force_apt_get: true
   become: true
 
 - name: Remove cloud-init local data

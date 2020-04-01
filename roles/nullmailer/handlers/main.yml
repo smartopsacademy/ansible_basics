@@ -6,3 +6,8 @@
 - name: Rebuild Debian msmtp database
   command: dpkg-reconfigure msmtp -f noninteractive -p critical
   become: true
+- name: OpenSMTPd restart
+  systemd:
+    name: opensmtpd
+    state: restarted
+  become: true

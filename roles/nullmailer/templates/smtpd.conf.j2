@@ -1,0 +1,21 @@
+{{ ansible_managed | comment }}
+
+#: smtpd.conf,v 1.10 2018/05/24 11:40:17 gilles Exp $
+
+# This is the smtpd server system-wide configuration file.
+# See smtpd.conf(5) for more information.
+
+table aliases file:/etc/aliases
+
+# To accept external mail, replace with: listen on all
+#
+listen on localhost
+
+action "local" maildir alias <aliases>
+action "relay" relay {% if nullmailer_host is defined and nullmailer_host|length %}host {{ 'tls://' if nullmailer_tls|bool else 'smtp://' }}{{ nullmailer_host }}:{{ nullmailer_port }}{% endif %}{% if nullmailer_fromoverride|bool %} mail-from "{{ nullmailer_from }}"{% endif %}
+
+# Uncomment the following to accept external mail for domain "example.org"
+#
+# match from any for domain "example.org" action "local"
+match for local action "local"
+match from local for any action "relay"

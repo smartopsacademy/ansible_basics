@@ -1,7 +1,8 @@
 ---
 nullmailer: "{{
   'msmtp' if ansible_facts.distribution == 'Debian' else
-  'ssmtp' if ansible_facts.distribution == 'Ubuntu'
+  'ssmtp' if ansible_facts.distribution == 'Ubuntu' else
+  'opensmtpd' if ansible_os_family == 'RedHat'
   }}"
 
 nullmailer_ssmtp_packages:
@@ -12,6 +13,9 @@ nullmailer_msmtp_packages:
   - msmtp
   - msmtp-mta
   - bsd-mailx
+
+nullmailer_opensmtpd_packages:
+  - opensmtpd
 
 nullmailer_remove_packages:
   - exim4
