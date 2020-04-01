@@ -1,0 +1,25 @@
+---
+- name: Install chrony
+  package:
+    name: chrony
+    state: present
+  become: true
+
+- name: Generate chrony.conf file
+  template:
+    src: chrony.conf.j2
+    dest: /etc/chrony.conf
+    backup: true
+    mode: 0644
+  notify: restart chronyd
+  become: true
+
+- name: Enable chronyd
+  service:
+    name: chronyd
+    enabled: true
+  become: true
+- name: Set timezone
+  timezone:
+    name: '{{ timezone }}'
+  become: true

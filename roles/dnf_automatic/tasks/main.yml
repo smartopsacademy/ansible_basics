@@ -1,0 +1,17 @@
+---
+# tasks file for dnf_automatic
+- name: Install dnf-automatic package
+  dnf:
+    name: dnf-automatic
+    state: latest
+  become: true
+- name: Overwrite the default config
+  template:
+    src: 'automatic.j2'
+    dest: '/etc/dnf/automatic.conf'
+  become: true
+- name: enable a timer for dnf-automatic
+  systemd:
+    name: dnf-automatic.timer
+    state: started
+    enabled: yes

@@ -1,0 +1,42 @@
+---
+- name: change password for root user
+  become: true
+  user:
+    name: root
+    password: ".SvMC6M9Ulyct8u.ql45tp2pfoPbqzwg0yCJE00txcUie.u.LSbr1oGgpSXUu/FgNaqbl6pRZIO."
+
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.fn }}"
+    password: "{{ item.pass }}"
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: true
+- name: Add SSH key
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.key }}"
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: true
+- name: Add sudo
+  lineinfile:
+    dest: "/etc/sudoers"
+    state: "present"
+    regexp: "^{{ item.name }}"
+    line: "{{ item.name }}\tALL=(ALL) ALL"
+    validate: /usr/sbin/visudo -cf %s
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: true
+- name: wheel eltávolítása
+  lineinfile:
+    path: /etc/sudoers
+    state: absent
+    regexp: '^%wheel'
+  become: true
+

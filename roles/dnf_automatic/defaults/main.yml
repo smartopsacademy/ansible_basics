@@ -1,0 +1,9 @@
+---
+automatic_type: "security"
+automatic_rsleep: "0"
+automatic_apply_updates: "yes"
+automatic_sysname: "DevOps"
+automatic_email: "true"
+automatic_email_from: "admin@doa.lan"
+automatic_email_to: "root"
+automatic_email_host: "localhost"
