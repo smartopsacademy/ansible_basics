@@ -25,7 +25,7 @@
     filename: 'ansible'
     update_cache: '{{ apt_update_cache }}'
     repo: '{{ item.repo }}'
-    state: 'present'
+    state: '{{ item.state }}'
   with_items: '{{ apt_repositories }}'
   become: true
 
