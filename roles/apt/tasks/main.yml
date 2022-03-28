@@ -2,10 +2,22 @@
 - name: Include distribution specific variables
   include_vars: "vars-dist-{{ ansible_facts.distribution }}.yml"
 
-- name: Remove default sources.list file
-  file:
+- name: Make sure the default sources.lists file exists
+  ansible.builtin.file:
     path: /etc/apt/sources.list
-    state: absent
+    owner: root
+    group: root
+    mode: 0644
+    state: touch
+    modification_time: preserve
+    access_time: preserve
+  become: true
+
+- name: Comment out all sources in default sources.list file
+  replace:
+    path: /etc/apt/sources.list
+    regexp: '^\s*(deb .*)'
+    replace: '#\1'
   become: true
 
 - name: Configure APT repositories
