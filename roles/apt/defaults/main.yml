@@ -5,6 +5,7 @@ apt_force_apt_get: 'yes'
 apt_upgrade: 'no'
 apt_autoclean: 'yes'
 apt_autoremove: 'no'
+apt_repository_filename: 'ansible'
 
 apt_base_packages:
   - 'lsb-release'

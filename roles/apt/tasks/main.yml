@@ -14,15 +14,15 @@
   become: true
 
 - name: Comment out all sources in default sources.list file
-  replace:
+  ansible.builtin.replace:
     path: /etc/apt/sources.list
-    regexp: '^\s*(deb .*)'
-    replace: '#\1'
+    regexp: '^\s*(deb.*)'
+    replace: '# Ansible managed # \1'
   become: true
 
 - name: Configure APT repositories
-  apt_repository:
-    filename: 'ansible'
+  ansible.builtin.apt_repository:
+    filename: '{{ apt_repository_filename }}'
     update_cache: '{{ apt_update_cache }}'
     repo: '{{ item.repo }}'
     state: '{{ item.state }}'
@@ -30,7 +30,7 @@
   become: true
 
 - name: Upgrade packages
-  apt:
+  ansible.builtin.apt:
     update_cache: '{{ apt_update_cache }}'
     upgrade: '{{ apt_upgrade }}'
     autoclean: '{{ apt_autoclean }}'
