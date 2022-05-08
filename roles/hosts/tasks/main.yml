@@ -4,13 +4,25 @@
     name: "{{ hostname }}"
   become: true
 
-- name: Configure the hosts file
-  template:
-    src: hosts.j2
-    dest: /etc/hosts
-  become: true
-
 - name: Set domain name
   command: "domainname {{ domain_name }}"
   when: ansible_facts.domain != domain_name
+  become: true
+
+- name: Remove default 127.0.1.1 entry
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    state: absent
+    regexp: '^127\.0\.1\.1 '
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Use the host's primary IP for the hosts file FQDN entry
+  lineinfile:
+    path: /etc/hosts
+    regexp: "^{{ ansible_facts.default_ipv4.address }} "
+    line: "{{ ansible_facts.default_ipv4.address }} {{ ansible_facts.hostname }}.{{ domain_name if domain_name is defined else ansible_facts.domain }} {{ ansible_facts.hostname }}"
+    state: present
   become: true
